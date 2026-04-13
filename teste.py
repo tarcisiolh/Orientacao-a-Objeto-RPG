@@ -31,15 +31,15 @@ exploracao = MissaoExploracao(
 
 print(combate)
 combate.iniciar_missao()
-combate.concluir_missao()
+combate.concluir_missao(1)
 combate.exibir_dados()
 
 print(coleta)
 coleta.iniciar_missao()
-coleta.concluir_missao()
+coleta.concluir_missao(10)
 coleta.exibir_dados()
 
 print(exploracao)
 exploracao.iniciar_missao()
-exploracao.concluir_missao()
+exploracao.concluir_missao(20)
 exploracao.exibir_dados()

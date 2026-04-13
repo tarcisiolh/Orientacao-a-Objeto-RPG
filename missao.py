@@ -100,6 +100,17 @@ class MissaoCombate(Missao):
         base = super().__str__()
         return base + f"Tipo de inimigo: {self.tipo_inimigo}\nInimigos a derrotar: {self.inimigos_a_derrotar}\n"
     
+    def concluir_missao(self, valor):
+        if self.status == Status.EM_ANDAMENTO:
+            if valor >= self.inimigos_a_derrotar:
+                self.status = Status.CONCLUIDA
+                return f"Missão concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
+            else:
+                self.status = Status.FRACASSADA
+                return f"A missão {self.nome} foi fracassada.\n"
+        else:
+            raise Exception("ERROR: o status da missão deve estar em andamento!")
+    
 class MissaoColeta(Missao):
     def __init__(self, nome, descricao, recompensa, item_necessario: str, quantidade_item: int, status=Status.PENDENTE):
         super().__init__(nome, descricao, recompensa, status)
@@ -129,6 +140,16 @@ class MissaoColeta(Missao):
     def __str__(self):
         base = super().__str__()
         return base + f"Item necessário: {self.item_necessario}\nQuantidade: {self.quantidade_item}\n"
+    def concluir_missao(self, valor):
+        if self.status == Status.EM_ANDAMENTO:
+            if valor >= self.quantidade_item:
+                self.status = Status.CONCLUIDA
+                return f"Missão concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
+            else:
+                self.status = Status.FRACASSADA
+                return f"A missão {self.nome} foi fracassada.\n"
+        else:
+            raise Exception("ERROR: o status da missão deve estar em andamento!")
 
 class MissaoExploracao(Missao):
     def __init__(self, nome, descricao, recompensa, regiao_destino: str, distancia_em_km: float, status=Status.PENDENTE):
@@ -159,3 +180,13 @@ class MissaoExploracao(Missao):
     def __str__(self):
         base = super().__str__()
         return base + f"Região destino: {self.regiao_destino}\nDistância: {self.distancia_em_km} km\n"
+    def concluir_missao(self, valor):
+        if self.status == Status.EM_ANDAMENTO:
+            if valor >= self.distancia_em_km:
+                self.status = Status.CONCLUIDA
+                return f"Missão concluída com sucesso. A contabilidade do prêmio de {self.recompensa} XP agora está pronta para retirada financeira\n"
+            else:
+                self.status = Status.FRACASSADA
+                return f"A missão {self.nome} foi fracassada.\n"
+        else:
+            raise Exception("ERROR: o status da missão deve estar em andamento!")
