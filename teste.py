@@ -2,7 +2,6 @@ from personagem import Personagem
 from missao import Missao, MissaoCombate, MissaoColeta, MissaoExploracao
 
 personagem1 = Personagem("Bentley")
-personagem2 = Personagem("Sly")
 
 combate = MissaoCombate(
     "Printing Press Duel",
@@ -25,21 +24,19 @@ exploracao = MissaoExploracao(
     "Entre no salão e tire as fotos necessárias de reconhecimento",
     30,
     "Ballroom",
-    2
+    10
 )
 
+personagem1.add_missao(combate)
+personagem1.add_missao(coleta)
+personagem1.add_missao(exploracao)
 
-print(combate)
-combate.iniciar_missao()
-combate.concluir_missao(1)
-combate.exibir_dados()
+#SUCESSO
+personagem1.concluir_missao(combate, 1)
 
-print(coleta)
-coleta.iniciar_missao()
-coleta.concluir_missao(10)
-coleta.exibir_dados()
+#FRACASSO
+personagem1.concluir_missao(coleta, 2)
 
-print(exploracao)
-exploracao.iniciar_missao()
-exploracao.concluir_missao(20)
-exploracao.exibir_dados()
+personagem1.concluir_missao(exploracao, 15)
+
+personagem1.exibir_dados()
