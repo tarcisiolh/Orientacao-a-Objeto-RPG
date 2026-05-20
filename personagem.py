@@ -1,5 +1,6 @@
 from Item import Item
 from TipoItem import TipoItem
+from Status import EstadoConcluida, EstadoAndamento
 
 class Personagem:
     def __init__(self, nome, vidaBase, ataqueBase):
@@ -37,12 +38,17 @@ class Personagem:
         
         vida_calculada = self.__vidaBase * (1 + (bonus_percentual / 100.0))
         return min(100.0, vida_calculada) 
+
     @property
     def ataque(self):
         ataque_total = self.__ataqueBase
         if self.__armaEquipada:
             ataque_total += self.__armaEquipada.valorEfeito
         return ataque_total
+
+    @property
+    def missoes(self):
+        return self.__missoes
 
     @nome.setter
     def nome(self, novoNome: str):
@@ -95,7 +101,7 @@ class Personagem:
                 print("Não foi possível equipar o utilitário (não encontrado ou tipo incorreto).")
 
     def __str__(self):
-        missoes_str = "\n".join([f"- {m.nome} ({m.status.value})" for m in self.__missoes])
+        missoes_str = "\n".join([f"- {m.nome} ({m.estado.nome})" for m in self.__missoes])
         return (
             f"PERSONAGEM:\n"
             f"Nome: {self.nome}\n"
@@ -129,7 +135,7 @@ class Personagem:
         resultado = missao.concluir_missao(valor)
         print(resultado)
 
-        if missao.status.value == "CONCLUIDA":
+        if isinstance(missao.estado, EstadoConcluida):
             self.__xp += missao.recompensa
             print(f"{self.nome} ganhou {missao.recompensa} XP!\n")
         else:
